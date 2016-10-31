@@ -1,0 +1,25 @@
+{
+    "name": "calderawp/edd-api-client",
+    "description": "PHP Client For EDD API",
+    "keywords": [
+        "wordpress"
+    ],
+    "minimum-stability": "dev",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Josh Pollock",
+            "homepage": "https://CalderaWP.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CalderaWP\\EDD\\API\\": "src"
+        },
+    }
+}
