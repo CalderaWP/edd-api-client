@@ -3,9 +3,9 @@ namespace CalderaWP\EDD\API;
 use GuzzleHttp\Client;
 
 /**
- * Class client
+ * Class Site
  *
- * Easy Digital Downloads API Client
+ * Easy Digital Downloads API Client for a site
  *
  * @see http://docs.easydigitaldownloads.com/article/1131-edd-rest-api-introduction
  * @author Josh Pollock <Josh@CalderaWP.com>
@@ -115,7 +115,7 @@ class Site {
 	 * @param int $number Optional. Default is 20 products
 	 * @param int $page Optional. Default is page 1.
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function customers( int $number = 20, int $page = 1 ) : \stdClass
 	{
@@ -136,8 +136,8 @@ class Site {
 	public function get( string  $endpoint, array $args = [] ) : \stdClass
 	{
 		$r = $this->client->request('GET', $this->form_url( $endpoint, $args ) );
-		if( 200 == $r->getStatusCode() && null != ( $body = json_decode( $r->getBody() ) )  ){
-			return $body;
+		if( 200 == $r->getStatusCode() && null != ( $body = json_decode( $r->getBody() )  ) && isset( $body->$endpoint )  ){
+			return (object) $body->$endpoint;
 		}else{
 			return new \stdClass();
 		}
