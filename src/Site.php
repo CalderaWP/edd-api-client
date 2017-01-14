@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
  * @author Josh Pollock <Josh@CalderaWP.com>
  * @license GPLv2+
  */
-class client {
+class Site {
 
 	/**
 	 * @var Client
