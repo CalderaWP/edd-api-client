@@ -41,7 +41,7 @@ class Site {
 	 *
 	 * @param int $id Sales ID
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function sale( int $id ) : \stdClass
 	{
@@ -54,7 +54,7 @@ class Site {
 	 * @param null|string $email Optional. Customer email -- please URL encode -- to get sales for.
 	 * @param int $number Optional. Numer of sales to get. Default is 20.
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function sales( string  $email = null, int $number = 20 ) : \stdClass
 	{
@@ -74,7 +74,7 @@ class Site {
 	 *
 	 * @param int $id Product ID
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function product( int $id )  : \stdClass
 	{
@@ -87,7 +87,7 @@ class Site {
 	 * @param int $number Optional. Default is 20 products
 	 * @param int $page Optional. Default is page 1.
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function products ( int $number = 20, int $page = 1 ) : \stdClass
 	{
@@ -102,7 +102,7 @@ class Site {
 	 *
 	 * @param int $id Customer ID
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function customer( int $id ) : \stdClass
 	{
@@ -131,16 +131,15 @@ class Site {
 	 * @param string $endpoint Endpoint URL. Base url will be prepended.
 	 * @param array $args Optional. Additional query args. API keys will be added.
 	 *
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function get( string  $endpoint, array $args = [] ) : \stdClass
 	{
 		$r = $this->client->request('GET', $this->form_url( $endpoint, $args ) );
-		if( 200 == $r->getStatusCode() ){
-
-			return json_decode( $r->getBody() );
+		if( 200 == $r->getStatusCode() && null != ( $body = json_decode( $r->getBody() ) )  ){
+			return $body;
 		}else{
-			return null;
+			return new \stdClass();
 		}
 
 	}
