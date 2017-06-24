@@ -1,6 +1,6 @@
 <?php
 namespace CalderaWP\EDD\API;
-use GuzzleHttp\Client;
+
 
 /**
  * Class Site
@@ -11,30 +11,7 @@ use GuzzleHttp\Client;
  * @author Josh Pollock <Josh@CalderaWP.com>
  * @license GPLv2+
  */
-class Site {
-
-	/**
-	 * @var Client
-	 */
-	protected $client;
-
-	/**
-	 * @var array
-	 */
-	protected $keys = [];
-
-	/**
-	 * @var string
-	 */
-	protected $base;
-	function __construct( Client $client, string $base, string $public, string $token ) {
-		$this->client = $client;
-		$this->base = $base;
-		$this->keys = [
-			'key' => $public,
-			'token' => $token,
-		];
-	}
+class Site extends Client{
 
 	/**
 	 * Get one sale
@@ -123,50 +100,6 @@ class Site {
 			'number' => $number,
 			'page'   => $page
 		] );
-	}
-
-	/**
-	 * Generic GET method
-	 *
-	 * @param string $endpoint Endpoint URL. Base url will be prepended.
-	 * @param array $args Optional. Additional query args. API keys will be added.
-	 *
-	 * @return \stdClass
-	 */
-	public function get( string  $endpoint, array $args = [] ) : \stdClass
-	{
-		$r = $this->client->request('GET', $this->form_url( $endpoint, $args ) );
-		if( 200 == $r->getStatusCode() && null != ( $body = json_decode( $r->getBody() )  ) && isset( $body->$endpoint )  ){
-			return (object) $body->$endpoint;
-		}else{
-			return new \stdClass();
-		}
-
-	}
-
-	/**
-	 * Perpare request arguments by adding keys
-	 *
-	 * @param array $args
-	 *
-	 * @return array
-	 */
-	protected function prepare_args( array  $args ) : array
-	{
-		return array_merge( $args, $this->keys );
-	}
-
-	/**
-	 * Form URL, including adding query args
-	 *
-	 * @param string $endpoint
-	 * @param array $args
-	 *
-	 * @return string
-	 */
-	protected function form_url( string $endpoint, array $args ) : string
-	{
-		return $this->base . $endpoint . '?' . http_build_query( $this->prepare_args( $args ) );
 	}
 
 }
