@@ -52,6 +52,7 @@ abstract class Client {
 			'query' => $args
 		]);
 
+		$x = $r->getBody()->getContents();
 		if( 200 == $r->getStatusCode() && null != ( $body = json_decode( $r->getBody() )  ) && isset( $body->$endpoint )  ){
 			return (object) $body->$endpoint;
 		}else{
