@@ -2,7 +2,10 @@
 PHP HTTP Client For Easy Digital Downloads API
 
 # Installation
+`composer require calderawp/edd-api-client`
 
+* Requires: PHP7.0+
+* Uses Guzzle 6
 
 ## Usage
 
@@ -83,3 +86,5 @@ $page2 = $subscriptions->subscriptions(2);
 $sub = $subscriptions->subscription(42);
 ```
 
+## License
+Copyright 2016+ CalderaWP LLC. Licnesed under the GNU GPL V2+
